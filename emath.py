@@ -19,6 +19,19 @@ def is_prime(x):
 
     return all(x % i > 0 for i in xrange(3, int(x**0.5) + 1, 2))
 
+def is_pandigital(i, n):
+    x = str(i)
+    if len(x) != n:
+        return False
+
+    a = ''.join( sorted(set(x)) )
+    b = ''.join( str(i) for i in xrange(1, n+1) )
+    return a == b
+
+# Remove the duplicated chars from string x
+#def remove_dup(x):
+#    return ''.join(sorted(set(x), key=x.index))
+
 def prime_sieve(x):
     # Sieve of Eratosthenes
     ret = []
