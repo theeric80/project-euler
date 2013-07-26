@@ -1,5 +1,6 @@
 import itertools
 from itertools import ifilter, takewhile
+from emath import proper_divisor, is_pandigital
 
 # Digit fifth powers
 def problem30():
@@ -32,6 +33,7 @@ def problem31():
         it = stack.pop()
         n = it[-1]
 
+        # Count the remaining money r
         r = x - sum(it)
         if r < 0:
             continue
@@ -45,6 +47,23 @@ def problem31():
 
     ret = len(ret)
     assert(ret == 73682)
+    print 'problem31 = %d' % ret
+
+# Pandigital products
+def problem32():
+    a = 1000
+    b = 10000
+    ret = set()
+    for i in xrange(a, b+1):
+        divisors = proper_divisor(i)[1:]    # remove divisor 1
+        for d in divisors:
+            q = i / d   # i = d * q
+            x = str(i) + str(d) + str(q)
+            if is_pandigital(int(x), 9):
+                ret.add(i)
+
+    ret = sum(ret)
+    assert(ret == 45228)
     print 'problem31 = %d' % ret
 
 if __name__ == '__main__':
