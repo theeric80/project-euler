@@ -1,3 +1,4 @@
+import math
 import operator
 import itertools
 from itertools import ifilter, takewhile, imap
@@ -16,7 +17,8 @@ def problem30():
     def match(a, b):
         return a == sum(int(i)**b for i in str(a))
 
-    ret = sum(ifilter(lambda i: match(i, 5), xrange(2, x+1)))
+    ret = sum(i for i in xrange(2, x+1) if match(i, 5))
+    #ret = sum(ifilter(lambda i: match(i, 5), xrange(2, x+1)))
 
     assert(ret == 443839)
     print 'problem30 = %d' % ret
@@ -102,6 +104,24 @@ def problem33():
 
     assert(ret == 100)
     print 'problem31 = %d' % ret
+
+# Digit factorials
+def problem34():
+    # find the upper bound x
+    x = 0
+    for i in itertools.count(1):
+        x = i * math.factorial(9)
+        if x < int('9'*i):
+            break
+
+    def match(a):
+        return a == sum(math.factorial(int(i)) for i in str(a))
+
+    ret = sum(i for i in xrange(3, x+1) if match(i))
+    #ret = sum(ifilter(lambda i: match(i), xrange(3, x+1)))
+
+    assert(ret == 40730)
+    print 'problem34 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(30, 40):
