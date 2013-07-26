@@ -1,5 +1,7 @@
+import operator
 import itertools
-from itertools import ifilter, takewhile
+from itertools import ifilter, takewhile, imap
+from fractions import gcd
 from emath import proper_divisor, is_pandigital
 
 # Digit fifth powers
@@ -64,6 +66,41 @@ def problem32():
 
     ret = sum(ret)
     assert(ret == 45228)
+    print 'problem31 = %d' % ret
+
+# Digit canceling fractions
+def problem33():
+    def match(n, d):
+        # Find the common digits
+        pool = [i for i in str(n) if i in str(d)]
+        for c in pool:
+            # Remove common digit from n, d
+            a = int( str(n).replace(c, '') )
+            b = int( str(d).replace(c, '') )
+            # Test
+            if float(n) / d == float(a) / b:
+                #print '(%d, %d) -> (%d, %d)' % (n, d, a, b)
+                return True
+        return False
+
+    # trivial examples for n, d
+    # 1) 10, 20, ... 2) 11, 22, ...
+    trivial = set(range(10, 100, 10) + range(11, 100, 11))
+
+    # n:numerator, d:denominator, n < d
+    ret = []
+    for n in xrange(10, 100):
+        for d in xrange(n+1, 100):
+            if n in trivial or d in trivial:
+                continue
+            if match(n, d):
+                ret.append((n, d))
+
+    # n/d product of the matched numerator/denominator
+    n, d = reduce(lambda u, v: tuple(imap(operator.mul, u, v)), ret)
+    ret = d / gcd(n, d) # Fraction in Lowest Terms, Reduced Form
+
+    assert(ret == 100)
     print 'problem31 = %d' % ret
 
 if __name__ == '__main__':
