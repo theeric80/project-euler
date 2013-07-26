@@ -3,7 +3,7 @@ import operator
 import itertools
 from itertools import ifilter, takewhile, imap
 from fractions import gcd
-from emath import proper_divisor, is_pandigital
+from emath import proper_divisor, is_pandigital, is_prime, prime_sieve
 
 # Digit fifth powers
 def problem30():
@@ -122,6 +122,29 @@ def problem34():
 
     assert(ret == 40730)
     print 'problem34 = %d' % ret
+
+# Circular primes
+def problem35():
+    x = 1000000
+
+    def rotate(n):
+        x = str(n)
+        return (int(x[i:] + x[:i]) for i in xrange(len(x)))
+
+    # method 1: Brute Force
+    def match1(n):
+        return all(imap(is_prime, rotate(n)))
+
+    # method 2: Prime Sieve
+    primes = set(prime_sieve(x))
+    def match2(n):
+        return all(i in primes for i in rotate(n))
+
+    #ret = len([i for i in xrange(3, x+1, 2) if match1(i)]) + 1
+    ret = len([i for i in xrange(3, x+1, 2) if match2(i)]) + 1
+
+    assert(ret == 55)
+    print 'problem35 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(30, 40):
