@@ -10,6 +10,10 @@ def is_palindrome(x):
         n /= 10
     return x == r
 
+def is_palindrome_s(x):
+    #print '%d ? %s == %s' % (x==x[::-1], x, x[::-1])
+    return x == x[::-1]
+
 def is_prime(x):
     # Trial Division
     if x == 2:
