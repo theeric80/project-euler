@@ -3,7 +3,7 @@ import operator
 import itertools
 from itertools import ifilter, takewhile, imap
 from fractions import gcd
-from emath import proper_divisor, is_pandigital, is_prime, prime_sieve
+from emath import proper_divisor, is_pandigital, is_prime, prime_sieve, is_palindrome_s
 
 # Digit fifth powers
 def problem30():
@@ -145,6 +145,20 @@ def problem35():
 
     assert(ret == 55)
     print 'problem35 = %d' % ret
+
+# Double-base palindromes
+def problem36():
+    x = 1000000
+
+    def match(a):
+        # bin(a): binary representation of a
+        return is_palindrome_s(str(a)) and is_palindrome_s(bin(a)[2:])
+
+    # The last bit of bin(n) must be 1, so check Odd numbers only
+    ret = sum([i for i in xrange(1, x+1, 2) if match(i)])
+
+    assert(ret == 872187)
+    print 'problem36 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(30, 40):
