@@ -160,6 +160,26 @@ def problem36():
     assert(ret == 872187)
     print 'problem36 = %d' % ret
 
+# Truncatable primes 
+def problem37():
+    def truncatable(a):
+        x = str(a)
+        l = [int(x[i:]) for i in xrange(0, len(x))]
+        r = [int(x[:i]) for i in xrange(len(x), 0, -1)]
+        return all(is_prime(n) for n in l+r)
+
+    ret = []
+    for i in itertools.count(11, 2):
+        if len(ret) >= 11:
+            break
+        if not truncatable(i):
+            continue
+        ret.append(i)
+
+    ret = sum(ret)
+    assert(ret ==748317)
+    print 'problem37 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(30, 40):
         fname = 'problem%d' % i
