@@ -199,6 +199,31 @@ def problem38():
     assert(ret == 932718654)
     print 'problem38 = %d' % ret
 
+# Integer right triangles
+def problem39():
+    '''
+    a + b + c = p
+    a^2 + b^2 = c^2
+    a <= b < c
+    '''
+    x = 1000
+
+    def match(p):
+        ret = []
+        for a in xrange(1, p/3+1):
+            for b in xrange(a, (p-a)/2+1):
+                c = p - a - b
+                #assert(b <= c)
+                if c**2 == a**2 + b**2:
+                    #print '%4d: {%d, %d, %d}' % (p, a, b, c)
+                    ret.append((p, a, b, c))
+        return (p, len(ret))
+
+    ret = max((match(p) for p in xrange(x, 3, -1)), key=lambda i: i[1])[0]
+
+    assert(ret == 840)
+    print 'problem39 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(30, 40):
         fname = 'problem%d' % i
