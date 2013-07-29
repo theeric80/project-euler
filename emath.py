@@ -1,4 +1,6 @@
 import math
+import operator
+from itertools import imap
 
 def is_palindrome(x):
     n = x
@@ -112,6 +114,10 @@ def permutations2(iterable):
             [ stack.append( (a+[x], b[0:i]+b[i+1:]) ) for i, x in enumerate(b) ]
         else:
             yield a+b
+
+def mat_mul(a, b):
+    col_b = zip(*b)
+    return [[sum(imap(operator.mul, r, c)) for c in col_b] for r in a]
 
 if __name__ == '__main__':
     print 'Unittest: %s' % __file__
