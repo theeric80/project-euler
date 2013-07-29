@@ -28,9 +28,10 @@ def is_pandigital(i, n):
     if len(x) != n:
         return False
 
-    a = ''.join( sorted(set(x)) )
-    b = ''.join( str(i) for i in xrange(1, n+1) )
-    return a == b
+    #a = ''.join( sorted(set(x)) )
+    #b = ''.join( str(i) for i in xrange(1, n+1) )
+    #return a == b
+    return set(x) == set(str(i) for i in xrange(1, n+1))
 
 # Remove the duplicated chars from string x
 #def remove_dup(x):
