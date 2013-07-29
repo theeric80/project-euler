@@ -177,8 +177,27 @@ def problem37():
         ret.append(i)
 
     ret = sum(ret)
-    assert(ret ==748317)
+    assert(ret == 748317)
     print 'problem37 = %d' % ret
+
+# Pandigital multiples
+def problem38():
+    def match(a):
+        x = ''
+        for n in itertools.count(1):
+            x += str(a * n)
+            if len(x) > 9:
+                break
+            elif len(x) == 9 and is_pandigital(x, 9):
+                #print '%d * [1-%d] = %s' % (a, n, x)
+                return int(x)
+                break
+        return 0
+
+    ret = max(match(i) for i in xrange(9876, 0, -1))
+
+    assert(ret == 932718654)
+    print 'problem38 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(30, 40):
