@@ -68,7 +68,7 @@ def problem32():
 
     ret = sum(ret)
     assert(ret == 45228)
-    print 'problem31 = %d' % ret
+    print 'problem32 = %d' % ret
 
 # Digit canceling fractions
 def problem33():
@@ -103,7 +103,7 @@ def problem33():
     ret = d / gcd(n, d) # Fraction in Lowest Terms, Reduced Form
 
     assert(ret == 100)
-    print 'problem31 = %d' % ret
+    print 'problem33 = %d' % ret
 
 # Digit factorials
 def problem34():
