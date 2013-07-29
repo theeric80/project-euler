@@ -3,7 +3,8 @@ import operator
 import itertools
 from itertools import ifilter, takewhile, imap
 from fractions import gcd
-from emath import proper_divisor, is_pandigital, is_prime, prime_sieve, is_palindrome_s
+from collections import deque
+from emath import proper_divisor, is_pandigital, is_prime, prime_sieve, is_palindrome_s, mat_mul
 
 # Digit fifth powers
 def problem30():
@@ -208,6 +209,35 @@ def problem39():
     '''
     x = 1000
 
+    # Primitive Pythagorean Triples
+    # http://en.wikipedia.org/wiki/Tree_of_primitive_Pythagorean_triples
+    # http://mathworld.wolfram.com/PythagoreanTriple.html
+    A = [[ 1,  2,  2], [-2, -1, -2], [2, 2, 3]]
+    B = [[ 1,  2,  2], [ 2,  1,  2], [2, 2, 3]]
+    C = [[-1, -2, -2], [ 2,  1,  2], [2, 2, 3]]
+    M = [A, B, C]
+
+    # Tree of Primitive Pythagorean Triples
+    q = deque([[[3, 4, 5]],])
+    pool = dict((i, []) for i in xrange(1, x+1))
+    while len(q) > 0:
+        i = q.popleft()
+        p = sum(i[0])
+        #print '%s' % i[0]
+        if p <= x:
+            pool[p] += i[0]
+            q += [mat_mul(i, m) for m in M]
+
+    # If (a, b, c) is a Pythagorean triple, then so is (ka, kb, kc)
+    ret = []
+    for i in xrange(12, x+1):
+        ret.append( (i, [d for d in (proper_divisor(i)+[i]) if pool[d]]) )
+
+    ret = max(ret, key=lambda i: len(i[1]))[0]
+    assert(ret == 840)
+    print 'problem39 = %d' % ret
+
+    '''
     def match(p):
         ret = []
         for a in xrange(1, p/3+1):
@@ -223,6 +253,7 @@ def problem39():
 
     assert(ret == 840)
     print 'problem39 = %d' % ret
+    '''
 
 if __name__ == '__main__':
     for i in xrange(30, 40):
