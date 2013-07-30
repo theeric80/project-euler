@@ -42,6 +42,19 @@ def problem41():
     assert(ret == 7652413)
     print 'problem41 = %d' % ret
 
+# Sub-string divisibility
+def problem43():
+    d = (1, 2, 3, 5, 7, 11, 13, 17)
+    def match(a):
+        return all(int(a[i:i+3]) % d[i] == 0 for i in xrange(1, 8))
+
+    # p: generator for all 0 to 9 pandigital numbers
+    p = (''.join(u) for u in permutations('0123456789') if u[0] != '0')
+    ret = sum([int(i) for i in p if match(i)])
+
+    assert(ret == 16695334890)
+    print 'problem43 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(40, 50):
         fname = 'problem%d' % i
