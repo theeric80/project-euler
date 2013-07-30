@@ -1,5 +1,6 @@
 import math
 import operator
+import itertools
 from itertools import imap
 
 def is_palindrome(x):
@@ -50,6 +51,37 @@ def prime_sieve(x):
         ret.append(i)
         for m in xrange(2*i, x, i):
             sieve[m] = False
+    return ret
+
+def prime_sieve_s(x):
+    # Segmented Sieve of Eratosthenes
+    def mark(sieve, p, start, stop):
+        i = max(2, math.ceil(float(start) / p))
+        for n in xrange(int(i)*p, stop, p):
+            if n not in sieve:
+                continue
+            sieve[n] = False
+
+    ret = []
+    end = bound = 350000
+    sieve = dict((n, True) for n in xrange(2, end))
+    for i in itertools.count(2):
+        if i >= x:
+            break
+        if i < end and sieve[i]:
+            # i was prime
+            ret.append(i)
+            mark(sieve, i, i, end)
+        elif i >= end:
+            # assert check
+            #b = all((n in ret) == sieve[n] for n in sieve)
+            #assert(b)
+
+            # Goto next segment
+            end = i + bound
+            sieve = dict((n, True) for n in xrange(i, end))
+            for p in ret:
+                mark(sieve, p, i, end)
     return ret
 
 def prime_factor(x):
