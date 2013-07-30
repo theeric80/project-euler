@@ -36,6 +36,9 @@ def is_pandigital(i, n):
     #return a == b
     return set(x) == set(str(i) for i in xrange(1, n+1))
 
+def is_pentagonal(x):
+    return (24 * x + 1)**0.5 % 6 == 5
+
 # Remove the duplicated chars from string x
 #def remove_dup(x):
 #    return ''.join(sorted(set(x), key=x.index))
@@ -117,6 +120,13 @@ def fibonacci_seq(x):
     while n <= x:
         yield n, a
         a, b, n = b, a+b, n+1
+
+def pentagonal_n(x):
+    return x * (3 * x - 1) / 2
+
+def pentagonal(start=1):
+    for i in itertools.count(start):
+        yield pentagonal_n(i)
 
 def permutations(iterable):
     # Depth-First-Search: Recursive
