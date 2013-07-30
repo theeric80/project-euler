@@ -121,12 +121,26 @@ def fibonacci_seq(x):
         yield n, a
         a, b, n = b, a+b, n+1
 
+def triangle_n(x):
+    return x * (x + 1) / 2
+
 def pentagonal_n(x):
     return x * (3 * x - 1) / 2
+
+def hexagonal_n(x):
+    return x * (2 * x - 1)
+
+def triangle(start=1):
+    for i in itertools.count(start):
+        yield triangle_n(i)
 
 def pentagonal(start=1):
     for i in itertools.count(start):
         yield pentagonal_n(i)
+
+def hexagonal(start=1):
+    for i in itertools.count(start):
+        yield hexagonal_n(i)
 
 def permutations(iterable):
     # Depth-First-Search: Recursive
