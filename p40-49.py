@@ -1,6 +1,8 @@
+import sys
 import itertools
 from itertools import permutations
-from emath import is_prime
+from collections import deque
+from emath import is_prime, pentagonal, is_pentagonal
 
 # Champernowne's constant
 def problem40():
@@ -54,6 +56,27 @@ def problem43():
 
     assert(ret == 16695334890)
     print 'problem43 = %d' % ret
+
+# Pentagon numbers
+def problem44():
+    # Assume Pk > Pj
+    # q: pentagonal numbers, which value < Pk
+    q = deque([1])
+    ret = sys.maxint
+    for Pk in pentagonal(start=2):
+        if Pk - q[0] >= ret:
+            break
+        for Pj in q:
+            a = Pk + Pj
+            b = Pk - Pj
+            if b >= ret:
+                break
+            if is_pentagonal(a) and is_pentagonal(b):
+                ret = min(b, ret)
+        q.appendleft(Pk)
+
+    assert(ret == 5482660)
+    print 'problem44 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(40, 50):
