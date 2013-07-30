@@ -2,7 +2,7 @@ import sys
 import itertools
 from itertools import permutations
 from collections import deque
-from emath import is_prime, pentagonal, is_pentagonal
+from emath import is_prime, pentagonal, is_pentagonal, triangle, hexagonal
 
 # Champernowne's constant
 def problem40():
@@ -77,6 +77,25 @@ def problem44():
 
     assert(ret == 5482660)
     print 'problem44 = %d' % ret
+
+# Triangular, pentagonal, and hexagonal
+def problem45():
+    n = 165
+    ret = 0
+    for h in hexagonal(start=143+1):
+        if ret > 0:
+            break
+        for i, p in enumerate(pentagonal(start=n), n):
+            if p == h:
+                ret = h
+            elif p > h:
+                n = i
+                break
+
+    # TODO: http://mathworld.wolfram.com/HexagonalPentagonalNumber.html
+
+    assert(ret == 1533776805)
+    print 'problem45 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(40, 50):
