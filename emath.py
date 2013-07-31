@@ -3,6 +3,15 @@ import operator
 import itertools
 from itertools import imap
 
+def profile(func):
+    def inner(*args, **kwargs):
+        import cProfile
+        prof = cProfile.Profile()
+        retval = prof.runcall(func, *args, **kwargs)
+        prof.print_stats()
+        return retval
+    return inner
+
 def is_palindrome(x):
     n = x
     r = 0
