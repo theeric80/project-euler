@@ -122,6 +122,20 @@ def problem46():
 
 # Distinct primes factors
 def problem47():
+    # Prime Sieve
+    x = 1000000
+    sieve = dict((i, 0) for i in xrange(2, x))
+
+    for i in itertools.count(2):
+        if sieve[i] == 0:
+            # i was prime
+            for n in xrange(2*i, x, i):
+                sieve[n] += 1
+        elif sieve[i] >= 4 and all(sieve[n] >= 4 for n in xrange(i-3, i)):
+            ret = i-3
+            break
+
+    '''
     # Brute Force
     x = 647
     q = deque([len(prime_factor(n)) for n in xrange(x, x+3)])
@@ -131,6 +145,7 @@ def problem47():
             ret = i - 3
             break
         q.popleft()
+    '''
 
     assert(ret == 134043)
     print 'problem47 = %d' % ret
