@@ -150,6 +150,14 @@ def problem47():
     assert(ret == 134043)
     print 'problem47 = %d' % ret
 
+# Self powers
+def problem48():
+    ret = str(sum(i**i for i in xrange(1, 1001)))[-10:]
+
+    ret = int(ret)
+    assert(ret == 9110846700)
+    print 'problem48 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(40, 50):
         fname = 'problem%d' % i
