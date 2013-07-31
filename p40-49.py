@@ -2,7 +2,7 @@ import sys
 import itertools
 from itertools import permutations
 from collections import deque
-from emath import is_prime, pentagonal, is_pentagonal, triangle, hexagonal
+from emath import is_prime, prime_factor, pentagonal, is_pentagonal, triangle, hexagonal
 
 # Champernowne's constant
 def problem40():
@@ -119,6 +119,21 @@ def problem46():
 
     assert(ret == 5777)
     print 'problem46 = %d' % ret
+
+# Distinct primes factors
+def problem47():
+    # Brute Force
+    x = 647
+    q = deque([len(prime_factor(n)) for n in xrange(x, x+3)])
+    for i in itertools.count(x+3):
+        q.append( len(prime_factor(i)) )
+        if all(i>=4 for i in q):
+            ret = i - 3
+            break
+        q.popleft()
+
+    assert(ret == 134043)
+    print 'problem47 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(40, 50):
