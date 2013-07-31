@@ -97,6 +97,29 @@ def problem45():
     assert(ret == 1533776805)
     print 'problem45 = %d' % ret
 
+# Goldbach's other conjecture
+def problem46():
+    def match(a, p):
+        i = ((a - p) / 2)**0.5
+        return int(i) == i
+
+    x = 9
+    ret = 0
+    primes = [2, 3, 5, 7]
+    while ret <= 0:
+        # i: odd composite number
+        for i in xrange(x, x+1000, 2):
+            if is_prime(i):
+                primes.append(i)
+                continue
+            if not any(match(i, p) for p in primes):
+                ret = i
+                break
+        x += 1000
+
+    assert(ret == 5777)
+    print 'problem46 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(40, 50):
         fname = 'problem%d' % i
