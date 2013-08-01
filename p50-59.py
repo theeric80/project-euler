@@ -85,6 +85,16 @@ def problem55():
     assert(ret == 249)
     print 'problem55 = %d' % ret
 
+# Powerful digit sum
+def problem56():
+    def dsum(n):
+        return sum(int(x) for x in str(n))
+
+    ret = max(dsum(a**b) for a in xrange(2, 100) for b in xrange(2, 100))
+
+    assert(ret == 972)
+    print 'problem56 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(50, 60):
         fname = 'problem%d' % i
