@@ -1,7 +1,7 @@
 import math
 from fractions import Fraction
 from itertools import count, dropwhile
-from emath import prime_sieve, is_permuted, is_palindrome_s
+from emath import is_prime, prime_sieve, is_permuted, is_palindrome_s
 
 # Consecutive prime sum
 def problem50():
@@ -120,6 +120,33 @@ def problem57():
 
     assert(ret == 153)
     print 'problem57 = %d' % ret
+
+# Spiral primes
+def problem58():
+    def square_spiral(length=0):
+        a, n = 1, 1
+        for i in count(1, 2):
+            if length and i > length:
+                break
+            yield range(a, a+n)
+            a = a + n
+            n = (i+2)*(i+2) - i*i
+
+    def diagonal(u):
+        z = len(u)
+        n = z / 4
+        return u[:] if z == 1 else [u[i] for i in xrange(n-1, z, n)]
+
+    a = 0
+    for i, u in enumerate(square_spiral(), 1):
+        a += sum(1 for n in diagonal(u) if is_prime(n))
+        b = i * 4 - 3
+        if a > 0 and float(a) / b < 0.1:
+            ret = i * 2 - 1
+            break
+
+    assert(ret == 26241)
+    print 'problem58 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(50, 60):
