@@ -37,13 +37,31 @@ def problem52():
 def problem53():
     a = 1
     b = 100
+    x = 1000000
+
+    '''
+    Binomial coefficient: http://en.wikipedia.org/wiki/Binomial_coefficient
+    Pascal's triangle:  c(n, r) = c(n-1, r-1) + c(n-1, r)
+    '''
+    # c: Pascal's triangle
+    c = [[1] * (b+1) for i in xrange(0, b+1)]
+    for n in xrange(2, b+1):
+        for r in xrange(1, n):
+            # set c(n, r) to x+1 if it is greater than x
+            i = c[n-1][r-1] + c[n-1][r]
+            c[n][r] = i if i <= x else (x+1)
+
+    ret = sum(1 for n in xrange(2, b+1) for r in xrange(1, n) if c[n][r] > x)
+
+    '''
+    # Brute Force
     f = dict((n, math.factorial(n)) for n in xrange(a, b+1))
     f[0] = 1
     def comb(n, r):
         return f[n] / (f[r] * f[n-r])
 
-    x = 1000000
     ret = sum(1 for n in xrange(a, b+1) for r in xrange(0, n+1) if comb(n, r) > x)
+    '''
 
     assert(ret == 4075)
     print 'problem53 = %d' % ret
