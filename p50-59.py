@@ -1,4 +1,5 @@
 import math
+from fractions import Fraction
 from itertools import count, dropwhile
 from emath import prime_sieve, is_permuted, is_palindrome_s
 
@@ -94,6 +95,31 @@ def problem56():
 
     assert(ret == 972)
     print 'problem56 = %d' % ret
+
+# Square root convergents
+def problem57():
+    '''
+    f(1) = 1 + 1 / 2
+    ...
+    f(n+1) = 1 + 1 / (2 + (f(n) - 1))
+           = 1 + 1 / (1 + f(n))
+    '''
+    def expand_sqrt2(stop=0):
+        f = 1 + Fraction(1, 2)
+        for i in count(1):
+            if stop and i >= stop:
+                break
+            yield i, f
+            f = 1 + 1 / (1 + f)
+
+    def match(a):
+        return len(str(a.numerator)) > len(str(a.denominator))
+
+    x = 1000
+    ret = sum(1 for i, f in expand_sqrt2(stop=x+1) if match(f))
+
+    assert(ret == 153)
+    print 'problem57 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(50, 60):
