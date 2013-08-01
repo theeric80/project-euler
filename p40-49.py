@@ -158,6 +158,25 @@ def problem48():
     assert(ret == 9110846700)
     print 'problem48 = %d' % ret
 
+# Prime permutations
+def problem49():
+    def is_permuted(a, b):
+        return set(str(a)) == set(str(b))
+
+    p = [i for i in xrange(1000, 10000) if is_prime(i)]
+    for i, a in enumerate(p):
+        if a == 1487:
+            # ingore (1487, 4817, 8147)
+            continue
+        pool = [n for n in p[i+1:] if is_permuted(a, n)]
+        for b in pool:
+            c = b + (b - a)
+            if c in pool:
+                ret = int(str(a) + str(b) + str(c))
+
+    assert(ret == 296962999629)
+    print 'problem49 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(40, 50):
         fname = 'problem%d' % i
