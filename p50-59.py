@@ -1,3 +1,4 @@
+import math
 from itertools import count, dropwhile
 from emath import prime_sieve, is_permuted
 
@@ -31,6 +32,21 @@ def problem52():
 
     assert(ret == 142857)
     print 'problem52 = %d' % ret
+
+# Combinatoric selections
+def problem53():
+    a = 1
+    b = 100
+    f = dict((n, math.factorial(n)) for n in xrange(a, b+1))
+    f[0] = 1
+    def comb(n, r):
+        return f[n] / (f[r] * f[n-r])
+
+    x = 1000000
+    ret = sum(1 for n in xrange(a, b+1) for r in xrange(0, n+1) if comb(n, r) > x)
+
+    assert(ret == 4075)
+    print 'problem53 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(50, 60):
