@@ -1,6 +1,6 @@
 import math
 from itertools import count, dropwhile
-from emath import prime_sieve, is_permuted
+from emath import prime_sieve, is_permuted, is_palindrome_s
 
 # Consecutive prime sum
 def problem50():
@@ -65,6 +65,25 @@ def problem53():
 
     assert(ret == 4075)
     print 'problem53 = %d' % ret
+
+# Lychrel numbers
+def problem55():
+    def rev(n):
+        return int(str(n)[::-1])
+
+    def is_lychrel(x):
+        n = x
+        for i in xrange(50):
+            n = n + rev(n)
+            if is_palindrome_s(str(n)):
+                return False
+        return True
+
+    x = 10000
+    ret = sum(1 for n in xrange(1, x+1) if is_lychrel(n))
+
+    assert(ret == 249)
+    print 'problem55 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(50, 60):
