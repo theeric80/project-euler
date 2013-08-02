@@ -1,6 +1,6 @@
 import math
 from fractions import Fraction
-from itertools import count, dropwhile
+from itertools import count, dropwhile, combinations
 from emath import is_prime, is_prime_mr, prime_sieve, is_permuted, is_palindrome_s
 
 # Consecutive prime sum
@@ -22,6 +22,40 @@ def problem50():
     ret = max(ret, key=lambda x: len(x[1]))[0]
     assert(ret == 997651)
     print 'problem50 = %d' % ret
+
+# Prime digit replacements
+def problem51():
+    digits09 = '0123456789'
+    digits19 = '123456789'
+    def replace(n, m):
+        digits = digits19 if 0 in m else digits09
+        for r in digits:
+            x = list(str(n))
+            for i in m:
+                x[i] = r
+            yield int(''.join(x))
+
+    primes = prime_sieve(1000000)
+    pool = set(primes)
+
+    ret = 0
+    for i in xrange(primes.index(56003), len(primes)):
+        n = primes[i]
+        z = len(str(n))
+        if ret > 0 and n >= ret:
+            break
+
+        # mask: comb(z, 1), comb(z, 2), comb(z, 3), ... comb(z, z-1)
+        for mask in (combinations(xrange(z), r) for r in range(1, z)):
+            for m in mask:
+                # replace: the list of replaced values by mask m
+                l = [p for p in replace(n, m) if p in pool]
+                if len(l) >= 8:
+                    #print '%d: %s : %s' % (n, str(m), str(l))
+                    ret = l[0]
+
+    assert(ret == 121313)
+    print 'problem51 = %d' % ret
 
 # Permuted multiples
 def problem52():
