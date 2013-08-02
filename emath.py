@@ -1,4 +1,5 @@
 import math
+from random import randint
 import operator
 import itertools
 from itertools import imap
@@ -34,6 +35,40 @@ def is_prime(x):
         return False
 
     return all(x % i > 0 for i in xrange(3, int(x**0.5) + 1, 2))
+
+def is_prime_mr(n, k=6):
+    # Miller Rabin Primality Test
+    # http://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test
+    # http://rosettacode.org/wiki/Miller-Rabin_primality_test
+    if n == 2:
+        return True
+    elif n < 2 or n % 2 == 0:
+        return False
+
+    # Test a whether it is a witness for the compositeness of n
+    def witness(a, n):
+        # n - 1 = (2**t)u ; t >= 1, u is odd
+        u = n - 1
+        t = 0
+        while u % 2 == 0:
+            u >>= 1
+            t += 1
+
+        x = pow(a, u, n)
+        if x == 1 or x == n - 1:
+            return False
+
+        for i in xrange(t-1):
+            x = x**2 % n
+            if x == 1:
+                return True
+            if x == n - 1:
+                return False
+
+        return True
+
+    # Miller-Rabin
+    return not any( witness(randint(2, n - 1), n) for i in xrange(k) )
 
 def is_pandigital(i, n):
     x = str(i)
