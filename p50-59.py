@@ -1,7 +1,7 @@
 import math
 from fractions import Fraction
 from itertools import count, dropwhile
-from emath import is_prime, prime_sieve, is_permuted, is_palindrome_s
+from emath import is_prime, is_prime_mr, prime_sieve, is_permuted, is_palindrome_s
 
 # Consecutive prime sum
 def problem50():
@@ -139,7 +139,7 @@ def problem58():
 
     a = 0
     for i, u in enumerate(square_spiral(), 1):
-        a += sum(1 for n in diagonal(u) if is_prime(n))
+        a += sum(1 for n in diagonal(u) if is_prime_mr(n))
         b = i * 4 - 3
         if a > 0 and float(a) / b < 0.1:
             ret = i * 2 - 1
