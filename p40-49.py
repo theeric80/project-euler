@@ -2,7 +2,7 @@ import sys
 import itertools
 from itertools import permutations
 from collections import deque
-from emath import is_prime, prime_factor, pentagonal, is_pentagonal, triangle, hexagonal
+from emath import is_prime, prime_factor, pentagonal, is_pentagonal, triangle, hexagonal, is_square
 
 # Champernowne's constant
 def problem40():
@@ -100,8 +100,7 @@ def problem45():
 # Goldbach's other conjecture
 def problem46():
     def match(a, p):
-        i = ((a - p) / 2)**0.5
-        return int(i) == i
+        return is_square((a - p) / 2)
 
     x = 9
     ret = 0
