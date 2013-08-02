@@ -27,6 +27,10 @@ def is_palindrome_s(n):
     x = str(n)
     return x == x[::-1]
 
+def is_square(n):
+    root = n**0.5
+    return int(root + 0.5)**2 == n
+
 def is_prime(x):
     # Trial Division
     if x == 2:
