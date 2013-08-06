@@ -161,38 +161,6 @@ def proper_divisor(x):
         ret += [a, b] if (a != b) else [a]
     return ret
 
-def fibonacci_n(x):
-    sqrt5 = 5**0.5
-    phi = (1 + sqrt5) / 2   # golden ratio
-    return int(phi**x / sqrt5 + 0.5)
-
-def fibonacci_seq(x):
-    a, b, n = 1, 1, 1
-    while n <= x:
-        yield n, a
-        a, b, n = b, a+b, n+1
-
-def triangle_n(x):
-    return x * (x + 1) / 2
-
-def pentagonal_n(x):
-    return x * (3 * x - 1) / 2
-
-def hexagonal_n(x):
-    return x * (2 * x - 1)
-
-def triangle(start=1):
-    for i in itertools.count(start):
-        yield triangle_n(i)
-
-def pentagonal(start=1):
-    for i in itertools.count(start):
-        yield pentagonal_n(i)
-
-def hexagonal(start=1):
-    for i in itertools.count(start):
-        yield hexagonal_n(i)
-
 def permutations(iterable):
     # Depth-First-Search: Recursive
     result = []

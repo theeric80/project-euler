@@ -6,13 +6,6 @@ from emath import is_prime, prime_factor, pentagonal, is_pentagonal, triangle, h
 
 # Champernowne's constant
 def problem40():
-    def champernowne_const():
-        #  Champernowne constant: 0.12345678910111213141516...
-        for i in itertools.count(1):
-            x = str(i)
-            for d in x:
-                yield d
-
     x = [10**i for i in xrange(0, 7)]
     ret = []
     for i, d in enumerate(champernowne_const(), 1):
