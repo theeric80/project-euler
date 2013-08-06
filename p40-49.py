@@ -2,7 +2,8 @@ import sys
 import itertools
 from itertools import permutations
 from collections import deque
-from emath import is_prime, prime_factor, pentagonal, is_pentagonal, triangle, hexagonal, is_square
+from emath import is_prime, prime_factor, is_pentagonal, is_square
+from enum import champernowne_const, triangle, pentagonal, hexagonal
 
 # Champernowne's constant
 def problem40():

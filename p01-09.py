@@ -1,6 +1,7 @@
 import itertools
 from itertools import ifilter, takewhile
-from emath import fibonacci_n, prime_factor, is_prime, is_palindrome, prime_sieve
+from emath import prime_factor, is_prime, is_palindrome, prime_sieve
+from enum import fibonacci_n
 
 # Multiples of 3 and 5
 def problem1():
