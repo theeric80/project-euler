@@ -1,8 +1,7 @@
 import math
 from random import randint
 import operator
-import itertools
-from itertools import imap
+from itertools import count, imap
 
 def profile(func):
     def inner(*args, **kwargs):
@@ -119,7 +118,7 @@ def prime_sieve_s(x):
     ret = []
     end = bound = 350000
     sieve = dict((n, True) for n in xrange(2, end))
-    for i in itertools.count(2):
+    for i in count(2):
         if i >= x:
             break
         if i < end and sieve[i]:
