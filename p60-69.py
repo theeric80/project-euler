@@ -133,6 +133,19 @@ def problem62():
     assert(ret == 127035954683)
     print 'problem62 = %d' % ret
 
+# Powerful digit counts
+def problem63():
+    def match(i, n):
+        return len(str(i)) == n
+
+    ret = 0
+    x = dropwhile(lambda i: 10**(i-1) <= 9**i, (i for i in count(1))).next()
+    for n in xrange(1, x):
+        ret += sum(1 for i in (a**n for a in xrange(1, 10)) if match(i, n))
+
+    assert(ret == 49)
+    print 'problem63 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(60, 70):
         fname = 'problem%d' % i
