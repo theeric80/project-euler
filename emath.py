@@ -84,7 +84,7 @@ def is_pandigital(i, n):
     return set(x) == set(str(i) for i in xrange(1, n+1))
 
 def is_permuted(x, y):
-    return set(str(x)) == set(str(y))
+    return sorted(str(x)) == sorted(str(y))
 
 def is_pentagonal(x):
     return (24 * x + 1)**0.5 % 6 == 5
