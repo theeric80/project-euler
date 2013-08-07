@@ -107,6 +107,18 @@ def problem61():
 def problem62():
     x = 5
     ret = []
+
+    pool = {}
+    for n in count(345):
+        n3 = n**3
+        k = ''.join(sorted(str(n3)))
+        v = pool.get(k, []) + [n3]
+        if len(v) >= x:
+            ret = v
+            break
+        pool[k] = v
+
+    '''
     for n in count(345):
         n3 = n**3
         max_n3 = int(''.join(sorted(str(n3), reverse=True)))
@@ -115,6 +127,7 @@ def problem62():
         if len(ret) >= x:
             #print ret
             break
+    '''
 
     ret = ret[0]
     assert(ret == 127035954683)
