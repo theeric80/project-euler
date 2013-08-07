@@ -1,4 +1,5 @@
-from itertools import combinations, dropwhile
+import enum
+from itertools import combinations, dropwhile, takewhile
 from collections import deque
 from emath import profile, prime_sieve, is_prime_mr
 
@@ -41,6 +42,66 @@ def problem60():
 
     assert(ret == 26033)
     print 'problem60 = %d' % ret
+
+# Cyclical figurate numbers
+def problem61():
+    seq = ['triangle', 'square', 'pentagonal', 'hexagonal', 'heptagonal', 'octagonal']
+    pool = []
+    def split(n):
+        x = str(n)
+        return x[:2], x[2:]
+
+    def join(a, b):
+        return int(str(a) + str(b))
+
+    def match(a):
+        return split(a[0])[0] == split(a[-1])[1]
+
+    class node(object):
+        def __init__(self, a, b, c, d):
+            self.i      = a
+            self.head   = b
+            self.tail   = c
+            self.cyclic = d
+
+        def next_cyclic_node(self):
+            next_seq = [i for i in xrange(0, len(seq)) if i not in self.cyclic[0]]
+            for next_i in next_seq:
+                if self.tail not in pool[next_i]:
+                    continue
+                # The last 2 digits of n was the first 2 digits of pool[next_i][next_head]
+                next_head = self.tail
+                for next_tail in pool[next_i][next_head]:
+                    next_cyclic = [ self.cyclic[0] + [next_i], \
+                                    self.cyclic[1] + [join(next_head, next_tail)] ]
+                    yield node(next_i, next_head, next_tail, next_cyclic)
+
+    # Init 6 sequence numbers
+    for f in seq:
+        d = {}
+        for n in takewhile(lambda n: n < 10000, (n for n in getattr(enum, f)() if n > 999)):
+            k, v = split(n)
+            d[k] = d.get(k, []) + [v]
+        pool.append(d)
+
+    # Tree Traverse
+    ret = []
+    for h in pool[0]:
+        q = deque([node(0, h, t, [[0], [join(h, t)]]) for t in pool[0][h]])
+        while len(q) > 0:
+            i = q.popleft()
+            for n in i.next_cyclic_node():
+                if len(n.cyclic[1]) < len(seq):
+                    q.append(n)
+                elif match(n.cyclic[1]):
+                    #print n.cyclic
+                    ret.append(n.cyclic[1])
+
+    ret = max(ret, key=lambda u: sum(u))
+    ret = sum(ret)
+
+    assert(ret == 28684)
+    print 'problem61 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(60, 70):
