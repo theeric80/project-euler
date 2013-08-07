@@ -1,7 +1,7 @@
 import enum
-from itertools import combinations, dropwhile, takewhile
+from itertools import combinations, count, dropwhile, takewhile
 from collections import deque
-from emath import profile, prime_sieve, is_prime_mr
+from emath import profile, prime_sieve, is_prime_mr, is_permuted
 
 # Prime pair sets
 def problem60():
@@ -102,6 +102,23 @@ def problem61():
 
     assert(ret == 28684)
     print 'problem61 = %d' % ret
+
+# Cubic permutations
+def problem62():
+    x = 5
+    ret = []
+    for n in count(345):
+        n3 = n**3
+        max_n3 = int(''.join(sorted(str(n3), reverse=True)))
+        pool = takewhile(lambda i: i <= max_n3, (i**3 for i in count(n)))
+        ret = [i for i in pool if is_permuted(n3, i)]
+        if len(ret) >= x:
+            #print ret
+            break
+
+    ret = ret[0]
+    assert(ret == 127035954683)
+    print 'problem62 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(60, 70):
