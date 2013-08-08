@@ -158,6 +158,16 @@ def problem64():
     assert(ret == 1322)
     print 'problem64 = %d' % ret
 
+# Convergents of e
+def problem65():
+    x = 100
+    seq = convergents(cf_e())
+    e100 = dropwhile(lambda u: u[0] < x, ((i, u) for i, u in enumerate(seq, 1))).next()[1]
+    ret = sum(int(x) for x in str(e100[0]))
+
+    assert(ret == 272)
+    print 'problem65 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(60, 70):
         fname = 'problem%d' % i
