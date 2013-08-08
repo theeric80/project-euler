@@ -90,6 +90,28 @@ def cf_e():
     for i in count(3):
         yield 1 if i % 3 != 1 else 2 * (i / 3)
 
+def convergents(seq):
+    # h(0) = a0
+    # k(0) = 1
+    # h(1) = a(1)a(0) + 1
+    # k(1) = a(1)
+    # h(n) = a(n)h(n-1) + h(n-2)
+    # k(n) = a(n)k(n-1) + k(n-2)
+    a0 = seq.next()
+    a1 = seq.next()
+
+    h1, k1 = a0, 1
+    h2, k2 = a1 * a0 + 1, a1
+
+    yield h1, k1
+    yield h2, k2
+
+    for a in seq:
+        h, k = a * h2 + h1, a * k2 + k1
+        h1, h2 = h2, h
+        k1, k2 = k2, k
+        yield h, k
+
 if __name__ == '__main__':
     print 'Unittest: %s' % __file__
     #raw_input()
