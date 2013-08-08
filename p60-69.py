@@ -168,6 +168,31 @@ def problem65():
     assert(ret == 272)
     print 'problem65 = %d' % ret
 
+# Diophantine equation
+def problem66():
+    # http://en.wikipedia.org/wiki/Diophantine_equation
+    # http://en.wikipedia.org/wiki/Pell%27s_equation
+    def cf_n(n):
+        a0, a = cf_sqrt(n)
+        x, z = a0, len(a)
+        for i in count(0):
+            yield x
+            x = a[i % z]
+
+    def match(d, x, y):
+        return x**2 - d * y**2 == 1
+
+    x = 1000
+    ret = []
+    for d in (d for d in xrange(2, x+1) if not is_square(d)):
+        seq = convergents(cf_n(d))
+        ret += [dropwhile(lambda u: not match(*u), ((d, h, k) for h, k in seq)).next()]
+
+    ret = max(ret, key=lambda x:x[1])[0]
+
+    assert(ret == 661)
+    print 'problem66 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(60, 70):
         fname = 'problem%d' % i
