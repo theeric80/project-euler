@@ -83,6 +83,13 @@ def cf_sqrt(n):
 
     return [a0, repeat]
 
+def cf_e():
+    # e = [2;1,2,1,1,4,1,1,6,1,1,8,...]
+    # The pattern continues with ... 1, 2n, 1, ... repeated for ever
+    yield 2
+    for i in count(3):
+        yield 1 if i % 3 != 1 else 2 * (i / 3)
+
 if __name__ == '__main__':
     print 'Unittest: %s' % __file__
     #raw_input()
