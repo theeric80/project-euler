@@ -140,12 +140,16 @@ def prime_sieve_s(x):
 def prime_factor(x):
     ret = {}
     i = 2
-    while x > 1:
+    sqrt_x = int(x**0.5)
+    while i <= sqrt_x and x > 1:
         if x % i == 0:
             x /= i
             ret[i] = ret.get(i, 0) + 1
         else:
             i += (2 if i > 2 else 1)
+    # x > 1 if x is prime
+    if x > 1:
+        ret[x] = ret.get(x, 0) + 1
     return ret
 
 def proper_divisor(x):
