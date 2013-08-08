@@ -1,7 +1,7 @@
 import enum
 from itertools import combinations, count, dropwhile, takewhile
 from collections import deque
-from emath import profile, prime_sieve, is_prime_mr, is_permuted, is_square
+from emath import profile, prime_sieve, is_prime_mr, is_permuted, is_square, prime_factor
 from enum import cf_sqrt, cf_e, convergents
 
 # Prime pair sets
@@ -192,6 +192,17 @@ def problem66():
 
     assert(ret == 661)
     print 'problem66 = %d' % ret
+
+# Totient maximum
+def problem69():
+    def phi(n):
+        return n * reduce(lambda a, b: a*b, (1 - 1/float(p) for p in prime_factor(n)))
+
+    x = 1000000
+    ret = max(((n, n/phi(n)) for n in xrange(2, x+1)), key=lambda u:u[1])[0]
+
+    assert(ret == 510510)
+    print 'problem69 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(60, 70):
