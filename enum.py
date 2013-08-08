@@ -1,5 +1,5 @@
 import math
-from itertools import count
+from itertools import count, dropwhile
 
 def fibonacci_n(x):
     sqrt5 = 5**0.5
@@ -60,6 +60,28 @@ def heptagonal(start=1):
 def octagonal(start=1):
     for i in count(start):
         yield octagonal_n(i)
+
+def cf_sqrt(n):
+    # http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Continued_fraction_expansion
+    # http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/cfINTRO.html#sqrtcf
+    def step(m, d, a):
+        m = d * a - m
+        d = (n - m**2) / d
+        a = int((a0 + m) / d)
+        return m, d, a
+
+    pool = set()
+    repeat = []
+
+    #a0 = int(n**0.5)
+    a0 = dropwhile(lambda i: i**2 < n, count(1)).next() - 1
+    u = step(0, 1, a0)
+    while u not in pool:
+        pool.add(u)
+        repeat.append(u[2])
+        u = step(*u)
+
+    return [a0, repeat]
 
 if __name__ == '__main__':
     print 'Unittest: %s' % __file__
