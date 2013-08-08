@@ -1,7 +1,8 @@
 import enum
 from itertools import combinations, count, dropwhile, takewhile
 from collections import deque
-from emath import profile, prime_sieve, is_prime_mr, is_permuted
+from emath import profile, prime_sieve, is_prime_mr, is_permuted, is_square
+from enum import cf_sqrt, cf_e, convergents
 
 # Prime pair sets
 def problem60():
@@ -145,6 +146,17 @@ def problem63():
 
     assert(ret == 49)
     print 'problem63 = %d' % ret
+
+# Odd period square roots
+def problem64():
+    def match(n):
+        return len(cf_sqrt(n)[1]) % 2 > 0
+
+    x = 10000
+    ret = sum(1 for n in xrange(2, x+1) if not is_square(n) and match(n))
+
+    assert(ret == 1322)
+    print 'problem64 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(60, 70):
