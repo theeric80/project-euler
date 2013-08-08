@@ -8,7 +8,7 @@ def profile(func):
         import cProfile
         prof = cProfile.Profile()
         retval = prof.runcall(func, *args, **kwargs)
-        prof.print_stats()
+        prof.print_stats(sort='cumulative')
         return retval
     return inner
 
