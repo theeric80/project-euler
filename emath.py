@@ -149,6 +149,20 @@ def prime_factor(x):
         ret[x] = ret.get(x, 0) + 1
     return ret
 
+def prime_factor_p(x, primes):
+    # Trial Division
+    ret = {}
+    sqrt_x = int(x**0.5)
+    for p in primes:
+        if p > sqrt_x:
+            break
+        while x % p == 0:
+            x /= p
+            ret[p] = ret.get(p, 0) + 1
+    if x > 1:
+        ret[x] = ret.get(x, 0) + 1
+    return ret
+
 def proper_divisor(x):
     # divisors <= sqrt(x)
     ret = [1]
