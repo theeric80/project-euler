@@ -1,14 +1,14 @@
 import math
 from random import randint
 import operator
-from itertools import count, imap
+from itertools import count, chain, imap
 
 def profile(func):
     def inner(*args, **kwargs):
         import cProfile
         prof = cProfile.Profile()
         retval = prof.runcall(func, *args, **kwargs)
-        prof.print_stats()
+        prof.print_stats(sort='cumulative')
         return retval
     return inner
 
@@ -138,16 +138,27 @@ def prime_sieve_s(x):
     return ret
 
 def prime_factor(x):
+    # Trial Division
     ret = {}
-    i = 2
     sqrt_x = int(x**0.5)
-    while i <= sqrt_x and x > 1:
-        if x % i == 0:
+    for i in chain([2], xrange(3, sqrt_x + 1, 2)):
+        while x % i == 0:
             x /= i
             ret[i] = ret.get(i, 0) + 1
-        else:
-            i += (2 if i > 2 else 1)
-    # x > 1 if x is prime
+    if x > 1:
+        ret[x] = ret.get(x, 0) + 1
+    return ret
+
+def prime_factor_p(x, primes):
+    # Trial Division
+    ret = {}
+    sqrt_x = int(x**0.5)
+    for p in primes:
+        if p > sqrt_x:
+            break
+        while x % p == 0:
+            x /= p
+            ret[p] = ret.get(p, 0) + 1
     if x > 1:
         ret[x] = ret.get(x, 0) + 1
     return ret
