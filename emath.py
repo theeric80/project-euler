@@ -208,6 +208,10 @@ def mat_mul(a, b):
     col_b = zip(*b)
     return [[sum(imap(operator.mul, r, c)) for c in col_b] for r in a]
 
+def phi(n):
+    # Euler's Totient function
+    return 1 if n <= 1 else int(n * reduce(lambda a, b: a*b, (1 - 1/float(p) for p in prime_factor(n))))
+
 if __name__ == '__main__':
     print 'Unittest: %s' % __file__
     # TODO: Unittest
