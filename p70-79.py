@@ -1,4 +1,5 @@
 from itertools import islice, dropwhile
+from fractions import gcd
 from emath import profile, prime_sieve, prime_factor_p, phi, is_permuted
 
 # Totient permutation
@@ -28,18 +29,13 @@ def problem70():
 # Ordered fractions
 def problem71():
     x = 1000000
-    D = {1: set()}
     f37 = 3.0 / 7
     ret = [0, (0, 1)]
-    primes = prime_sieve(int(x**0.5) + 1)
-
     for d in xrange(2, x + 1):
-        D[d] = set(prime_factor_p(d, primes).keys())
-
         # n/d: the first reduced proper fraction for d to the left of 3/7
         # n/d < 3/7 ==> b = int(3.0 / 7 * d)
         b = max(int(f37 * d), 1)
-        n = dropwhile(lambda n: D[n].intersection(D[d]), (n for n in xrange(b, 0, -1))).next()
+        n = dropwhile(lambda n: gcd(n, d) > 1, (n for n in xrange(b, 0, -1))).next()
 
         f = float(n) / d
         if f < f37 and f > ret[0]:
