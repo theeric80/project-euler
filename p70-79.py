@@ -45,6 +45,16 @@ def problem71():
     assert(ret == 428570)
     print 'problem71 = %d' % ret
 
+# Counting fractions
+def problem72():
+    x = 1000000
+    # n/d is reduced proper fraction if n is relatively prime to d
+    # # of reduced proper fraction for d ==> phi(d)
+    ret = sum(phi(d) for d in xrange(2, x+1))
+
+    assert(ret == 303963552391)
+    print 'problem72 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(70, 80):
         fname = 'problem%d' % i
