@@ -55,6 +55,25 @@ def problem72():
     assert(ret == 303963552391)
     print 'problem72 = %d' % ret
 
+# Counting fractions in a range
+def problem73():
+    x = 12000
+    f12 = 1.0 / 2
+    f13 = 1.0 / 3
+
+    def match(n, d):
+        f = float(n) / d
+        return f > f13 and f < f12 and gcd(n, d) == 1
+
+    ret = 0
+    for d in xrange(2, x+1):
+        a = int(f13 * d) + 1
+        b = int(f12 * d)
+        ret += sum(1 for n in xrange(a, b+1) if match(n, d))
+
+    assert(ret == 7295372)
+    print 'problem73 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(70, 80):
         fname = 'problem%d' % i
