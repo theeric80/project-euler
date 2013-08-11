@@ -1,4 +1,5 @@
-from itertools import islice, dropwhile
+import math
+from itertools import count, islice, dropwhile
 from fractions import gcd
 from emath import profile, prime_sieve, prime_factor_p, phi, is_permuted
 
@@ -73,6 +74,24 @@ def problem73():
 
     assert(ret == 7295372)
     print 'problem73 = %d' % ret
+
+# Digit factorial chains
+def problem74():
+    x = 10**6
+    z = 60
+    f = dict((str(n), math.factorial(n)) for n in xrange(0, 10))
+    ret = 0
+    for n in xrange(2, x+1):
+        a = n
+        seq = set()
+        while a not in seq:
+            seq.add(a)
+            a = sum(f[d] for d in str(a))
+        if len(seq) == z:
+            ret += 1
+
+    assert(ret == 402)
+    print 'problem74 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(70, 80):
