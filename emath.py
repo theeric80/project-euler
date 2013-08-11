@@ -210,7 +210,9 @@ def mat_mul(a, b):
 
 def phi(n):
     # Euler's Totient function
-    return 1 if n <= 1 else int(n * reduce(lambda a, b: a*b, (1 - 1/float(p) for p in prime_factor(n))))
+    # return 1 if n <= 1 else n * reduce(lambda a, b: a*b, (1 - Fraction(1, p) for p in prime_factor(n)))
+    # N = n, N = N - N//p for each p
+    return 1 if n <= 1 else reduce(lambda a, b: a - a//b, chain([n], (p for p in prime_factor(n))))
 
 if __name__ == '__main__':
     print 'Unittest: %s' % __file__

@@ -1,5 +1,5 @@
 import enum
-from itertools import combinations, count, dropwhile, takewhile
+from itertools import combinations, count, dropwhile, takewhile, chain
 from collections import deque
 from emath import profile, prime_sieve, is_prime_mr, is_permuted, is_square, prime_factor, prime_factor_p
 from enum import cf_sqrt, cf_e, convergents
@@ -198,9 +198,9 @@ def problem69():
     x = 1000000
     primes = prime_sieve(int(x**0.5) + 1)
     def phi(n):
-        return n * reduce(lambda a, b: a*b, (1 - 1/float(p) for p in prime_factor_p(n, primes)))
+        return reduce(lambda a, b: a - a//b, chain([n], (p for p in prime_factor_p(n, primes))))
 
-    ret = max(((n, n/phi(n)) for n in xrange(2, x+1)), key=lambda u:u[1])[0]
+    ret = max(((n, float(n)/phi(n)) for n in xrange(2, x+1)), key=lambda u:u[1])[0]
 
     assert(ret == 510510)
     print 'problem69 = %d' % ret
