@@ -127,6 +127,22 @@ def problem75():
     assert(ret == 161667)
     print 'problem75 = %d' % ret
 
+# Counting summations
+def problem76():
+    # Dynamic Programming
+    x = 100 + 1
+    M = [[1] * x for i in xrange(x)]
+    for m, n in ((m, n) for m in xrange(2, x) for n in xrange(2, x)):
+        if m - n >= 0:
+            M[m][n] = M[m][n-1] + M[m-n][n]
+        else:
+            M[m][n] = M[m][n-1]
+
+    ret = M[-1][-1] - 1
+
+    assert(ret == 190569291)
+    print 'problem76 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(70, 80):
         fname = 'problem%d' % i
