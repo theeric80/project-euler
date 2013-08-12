@@ -1,4 +1,5 @@
 import math
+from fractions import gcd
 from itertools import count, dropwhile
 
 def fibonacci_n(x):
@@ -60,6 +61,26 @@ def heptagonal(start=1):
 def octagonal(start=1):
     for i in count(start):
         yield octagonal_n(i)
+
+def pythagorean_triple(x):
+    # Pythagorean triple: a^2 + b^2 = c^2
+    # http://en.wikipedia.org/wiki/Pythagorean_triple
+
+    # Euclid's formula: a = m^2 - n^2, b = 2mn, c = m^2 + n^2
+    # 1) m > n
+    # 2) m and n are coprime
+    # 3) m - n is odd
+
+    def is_primitive(m, n):
+        assert(m > n)
+        return gcd(m, n) == 1 and (m - n) % 2 == 1
+
+    sqrt_x = int((x / 2)**0.5)
+    for m, n in ((m, n) for m in xrange(2, sqrt_x+1) for n in xrange(1, m) if is_primitive(m, n)):
+        a, b, c = m**2 - n**2, 2*m*n, m**2 + n**2
+        p = a + b + c
+        for i, u in enumerate(xrange(p, x+1, p), 1):
+            yield i*a, i*b, i*c
 
 def cf_sqrt(n):
     # http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Continued_fraction_expansion
