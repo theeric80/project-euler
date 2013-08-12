@@ -81,13 +81,32 @@ def problem74():
     z = 60
     f = dict((str(n), math.factorial(n)) for n in xrange(0, 10))
     ret = 0
-    for n in xrange(2, x+1):
+    '''
+    for n in xrange(1, x+1):
         a = n
-        seq = set()
-        while a not in seq:
-            seq.add(a)
+        q = set()
+        while a not in q:
+            q.add(a)
             a = sum(f[d] for d in str(a))
-        if len(seq) == z:
+        if len(q) == z:
+            ret += 1
+    '''
+    D = {1:0, 2:0, 145:0, 169:3, 363601:3, 1454:3, 871:2, 45361:2, 872:2, 45362:2}
+    q = set()
+
+    def chain(n):
+        if n in D:
+            return D[n]
+        elif n in q:
+            return 0
+        q.add(n)
+        a = sum(f[d] for d in str(n))
+        return 1 + chain(a)
+
+    for n in xrange(3, x+1):
+        D[n] = chain(n)
+        q.clear()
+        if D[n] == z:
             ret += 1
 
     assert(ret == 402)
