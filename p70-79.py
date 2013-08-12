@@ -143,6 +143,33 @@ def problem76():
     assert(ret == 190569291)
     print 'problem76 = %d' % ret
 
+# Prime summations
+def problem77():
+    x = 100 + 1
+    P = [0] + prime_sieve(x)
+    z = len(P)
+    M = [[0] * z for i in xrange(x)]
+
+    # Init
+    for n in xrange(z):
+        M[0][n] = 1
+
+    ret = 0
+    for m in xrange(2, x):
+        for n in xrange(1, z):
+            i = m - P[n]
+            if i >= 0:
+                M[m][n] = M[m][n-1] + M[i][n]
+            else:
+                M[m][n] = M[m][n-1]
+        #print '%3d: %s' %(m, str(M[m]))
+        if M[m][-1] > 5000:
+            ret = m
+            break
+
+    assert(ret == 71)
+    print 'problem77 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(70, 80):
         fname = 'problem%d' % i
