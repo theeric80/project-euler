@@ -2,6 +2,7 @@ import math
 from itertools import count, islice, dropwhile
 from fractions import gcd
 from emath import profile, prime_sieve, prime_factor_p, phi, is_permuted
+from enum import pythagorean_triple
 
 # Totient permutation
 def problem70():
@@ -111,6 +112,20 @@ def problem74():
 
     assert(ret == 402)
     print 'problem74 = %d' % ret
+
+# Singular integer right triangles
+def problem75():
+    x = 1500000
+    pool = {}
+    for a, b, c in pythagorean_triple(x):
+        p = a + b + c
+        #print '%d: (%d, %d, %d)' % (p, a, b, c)
+        pool[p] = pool.get(p, 0) + 1
+
+    ret = sum(1 for p in pool if pool[p] == 1)
+
+    assert(ret == 161667)
+    print 'problem75 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(70, 80):
