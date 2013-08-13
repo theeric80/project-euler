@@ -170,6 +170,35 @@ def problem77():
     assert(ret == 71)
     print 'problem77 = %d' % ret
 
+# Coin partitions
+def problem78():
+    # Partition Function P
+    # http://mathworld.wolfram.com/PartitionFunctionP.html (Item 11)
+    x = 1000000
+    pool = {0:1, 1:1}
+    def P(n):
+        if n < 0:
+            return 0
+        elif n in pool:
+            return pool[n]
+
+        ret = 0
+        for k in xrange(1, n+1):
+            s = (-1)**(k+1)
+            a = n - k*(3*k-1)/2
+            b = n - k*(3*k+1)/2
+            if a < 0 and b < 0:
+                break
+            ret += s * (P(a) + P(b))
+
+        pool[n] = ret
+        return ret
+
+    ret = dropwhile(lambda n: P(n) % 1000000 > 0, (n for n in xrange(2, x+1))).next()
+
+    assert(ret == 55374)
+    print 'problem78 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(70, 80):
         fname = 'problem%d' % i
