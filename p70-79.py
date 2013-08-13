@@ -199,6 +199,33 @@ def problem78():
     assert(ret == 55374)
     print 'problem78 = %d' % ret
 
+# Passcode derivation
+def problem79():
+    U = [319, 680, 180, 690, 129, 620, 762, 689, 762, 318, 368, 710, 720, 710, 629, 168, 160, 689, 716, 731, 736, 729, 316, 729, 729, 710, 769, 290, 719, 680, 318, 389, 162, 289, 162, 718, 729, 319, 790, 680, 890, 362, 319, 760, 316, 729, 380, 319, 728, 716]
+    U = [tuple(str(u)) for u in U]
+    C = sorted(set(x for u in U for x in u))
+    ret = [C[0]]
+    for d in islice(C, 1, None):
+        pool = ret[:]
+        for u in (u for u in U if d in u):
+            if not pool:
+                break
+            for x in (x for x in u if x in pool):
+                di = u.index(d)
+                xi = u.index(x)
+                i = pool.index(x)
+                pool = pool[:i] if di < xi else pool[i+1:]
+
+                if len(pool) == 0:
+                    i = ret.index(x)
+                    di = i if di < xi else i + 1
+                    ret.insert(di, d)
+                    break
+
+    ret = int(''.join(ret))
+    assert(ret == 73162890)
+    print 'problem79 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(70, 80):
         fname = 'problem%d' % i
