@@ -52,6 +52,51 @@ def problem81():
     assert(ret == 427337)
     print 'problem81 = %d' % ret
 
+# Path sum: three ways
+def problem82():
+    # Shortest path problem
+    '''
+    G = [[131, 673, 234, 103,  18],
+         [201,  96, 342, 965, 150],
+         [630, 803, 746, 422, 111],
+         [537, 699, 497, 121, 956],
+         [805, 732, 524,  37, 331]]
+    '''
+    fname = join(split(__file__)[0], 'data\\p81_matrix.txt')
+    with open(fname) as f:
+        G = [map(int, x.split(',')) for x in f.readlines()]
+
+    row, col = len(G), len(G[0])
+    G = dict([(m, n), G[m][n]] for m in xrange(row) for n in xrange(col))
+
+    def neighbors(u):
+        m, n = u
+        for v in [(m, n+1), (m-1, n), (m+1, n)]:
+            i, j = v
+            if i >= 0 and i < row and j >= 0 and j < col:
+                yield v
+
+    # Dijkstra's algorithm
+    def Dijkstra(source):
+        ret = sys.maxint
+        D = dict([(m, n), sys.maxint] for m in xrange(row) for n in xrange(col))
+        D[source] = G[source]
+        while len(D) > 0:
+            u = min(D, key=lambda x:D[x])
+            p = D.pop(u)
+            for v in (v for v in neighbors(u) if v in D):
+                d = p + G[v]
+                if d < D[v]:
+                    D[v] = d
+            if u[1] >= col - 1:
+                ret = min(p, ret)
+        return ret
+
+    ret = min(Dijkstra((m, 0)) for m in xrange(row))
+
+    assert(ret == 260324)
+    print 'problem81 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(80, 90):
         fname = 'problem%d' % i
