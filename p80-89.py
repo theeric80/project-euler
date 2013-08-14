@@ -1,4 +1,6 @@
+import sys
 import math
+from os.path import join, split
 from itertools import count, dropwhile
 from emath import profile, is_square
 
@@ -32,6 +34,23 @@ def problem80():
 
     assert(ret == 40886)
     print 'problem80 = %d' % ret
+
+# Path sum: two ways
+def problem81():
+    fname = join(split(__file__)[0], 'data\\p81_matrix.txt')
+    with open(fname) as f:
+        P = [map(int, x.split(',')) for x in f.readlines()]
+
+    for m, n in ((m, n) for m in xrange(len(P)) for n in xrange(len(P[0]))):
+        if m == 0 and n == 0:
+            continue
+        L = P[m][n-1] if n - 1 >= 0 else sys.maxint
+        U = P[m-1][n] if m - 1 >= 0 else sys.maxint
+        P[m][n] += min(L, U)
+
+    ret = P[-1][-1]
+    assert(ret == 427337)
+    print 'problem81 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(80, 90):
