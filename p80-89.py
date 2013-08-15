@@ -1,4 +1,5 @@
 import sys
+import bisect
 import math
 from os.path import join, split
 from itertools import count, dropwhile
@@ -81,12 +82,16 @@ def problem82():
         ret = sys.maxint
         D = dict([(m, n), sys.maxint] for m in xrange(row) for n in xrange(col))
         D[source] = G[source]
-        while len(D) > 0:
-            u = min(D, key=lambda x:D[x])
-            p = D.pop(u)
-            for v in (v for v in neighbors(u) if v in D):
+        U = [(D[k], k) for k in D]
+        U.sort()
+        while len(U) > 0:
+            p, u = U.pop(0)
+            for v in neighbors(u):
                 d = p + G[v]
                 if d < D[v]:
+                    # Update path sum in U and D
+                    U.remove((D[v], v))
+                    bisect.insort_left(U, (d, v))
                     D[v] = d
             if u[1] >= col - 1:
                 ret = min(p, ret)
