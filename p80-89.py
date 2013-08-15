@@ -1,9 +1,9 @@
 import sys
-import bisect
 import math
 from os.path import join, split
 from itertools import count, dropwhile
 from emath import profile, is_square
+from ealgorithm import Dijkstra
 
 # Square root digital expansion
 def problem80():
@@ -57,7 +57,7 @@ def problem81():
 def problem82():
     # Shortest path problem
     '''
-    G = [[131, 673, 234, 103,  18],
+    M = [[131, 673, 234, 103,  18],
          [201,  96, 342, 965, 150],
          [630, 803, 746, 422, 111],
          [537, 699, 497, 121, 956],
@@ -65,10 +65,9 @@ def problem82():
     '''
     fname = join(split(__file__)[0], 'data\\p81_matrix.txt')
     with open(fname) as f:
-        G = [map(int, x.split(',')) for x in f.readlines()]
+        M = [map(int, x.split(',')) for x in f.readlines()]
 
-    row, col = len(G), len(G[0])
-    G = dict([(m, n), G[m][n]] for m in xrange(row) for n in xrange(col))
+    row, col = len(M), len(M[0])
 
     def neighbors(u):
         m, n = u
@@ -77,33 +76,20 @@ def problem82():
             if i >= 0 and i < row and j >= 0 and j < col:
                 yield v
 
-    # Dijkstra's algorithm
-    def Dijkstra(source):
-        ret = sys.maxint
-        D = dict([(m, n), sys.maxint] for m in xrange(row) for n in xrange(col))
-        D[source] = G[source]
-        U = [(D[k], k) for k in D]
-        U.sort()
-        while len(U) > 0:
-            p, u = U.pop(0)
-            for v in neighbors(u):
-                d = p + G[v]
-                if d < D[v]:
-                    # Remove (D[v], v) from U.
-                    # U.remove((D[v], v))
-                    i = bisect.bisect_left(U, (D[v], v))
-                    U = U[:i] + U[i+1:]
-                    # Update path sum in U and D
-                    bisect.insort_left(U, (d, v))
-                    D[v] = d
-            if u[1] >= col - 1:
-                ret = min(p, ret)
-        return ret
+    # Build Graph G (Adjacency list)
+    G = dict()
+    for u in ((m, n) for m in xrange(row) for n in xrange(col)):
+        G[u] = [[(i, j), M[i][j]] for i, j in neighbors(u)]
 
-    ret = min(Dijkstra((m, 0)) for m in xrange(row))
+    # minimum path sum from (m, 0)
+    dst = [(m, col-1) for m in xrange(row)]
+    path = (M[m][0] + min(Dijkstra(G, (m, 0), dst))[0] for m in xrange(row))
+
+    # minimum path sum for G
+    ret = min(i for i in path)
 
     assert(ret == 260324)
-    print 'problem81 = %d' % ret
+    print 'problem82 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(80, 90):
