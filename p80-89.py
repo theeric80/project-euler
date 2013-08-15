@@ -89,8 +89,11 @@ def problem82():
             for v in neighbors(u):
                 d = p + G[v]
                 if d < D[v]:
+                    # Remove (D[v], v) from U.
+                    # U.remove((D[v], v))
+                    i = bisect.bisect_left(U, (D[v], v))
+                    U = U[:i] + U[i+1:]
                     # Update path sum in U and D
-                    U.remove((D[v], v))
                     bisect.insort_left(U, (d, v))
                     D[v] = d
             if u[1] >= col - 1:
