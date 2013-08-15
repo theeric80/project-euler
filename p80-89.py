@@ -91,6 +91,32 @@ def problem82():
     assert(ret == 260324)
     print 'problem82 = %d' % ret
 
+# Path sum: four ways
+def problem83():
+    # Build matrix from file
+    fname = join(split(__file__)[0], 'data', 'p81_matrix.txt')
+    with open(fname) as f:
+        M = [map(int, x.split(',')) for x in f.readlines()]
+        row, col = len(M), len(M[0])
+
+    # Build Graph G
+    def neighbors(u):
+        m, n = u
+        for i, j in [(m, n-1), (m, n+1), (m-1, n), (m+1, n)]:
+            if i >= 0 and i < row and j >= 0 and j < col:
+                yield i, j
+
+    G = dict()
+    for u in ((m, n) for m in xrange(row) for n in xrange(col)):
+        G[u] = [[(i, j), M[i][j]] for i, j in neighbors(u)]
+
+    # Find the minimal path sum from the top left to the bottom right
+    src, dst = (0, 0), [(row-1, col-1)]
+    ret = M[0][0] + Dijkstra(G, src, dst)[0][0]
+
+    assert(ret == 425185)
+    print 'problem83 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(80, 90):
         fname = 'problem%d' % i
