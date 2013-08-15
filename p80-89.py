@@ -38,7 +38,7 @@ def problem80():
 
 # Path sum: two ways
 def problem81():
-    fname = join(split(__file__)[0], 'data\\p81_matrix.txt')
+    fname = join(split(__file__)[0], 'data', 'p81_matrix.txt')
     with open(fname) as f:
         P = [map(int, x.split(',')) for x in f.readlines()]
 
@@ -63,7 +63,7 @@ def problem82():
          [537, 699, 497, 121, 956],
          [805, 732, 524,  37, 331]]
     '''
-    fname = join(split(__file__)[0], 'data\\p81_matrix.txt')
+    fname = join(split(__file__)[0], 'data', 'p81_matrix.txt')
     with open(fname) as f:
         M = [map(int, x.split(',')) for x in f.readlines()]
 
