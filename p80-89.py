@@ -1,8 +1,8 @@
 import sys
 import math
 from os.path import join, split
-from itertools import count, dropwhile
-from emath import profile, is_square
+from itertools import count, dropwhile, takewhile, imap
+from emath import profile, is_square, prime_sieve
 from ealgorithm import Dijkstra
 
 # Square root digital expansion
@@ -139,6 +139,25 @@ def problem85():
 
     assert(ret == 2772)
     print 'problem85 = %d' % ret
+
+# Prime power triples
+def problem87():
+    x = 50 * 10**6
+    primes = prime_sieve(int(x**0.5)+1)
+
+    def P(exp, n):
+        root = int(n**(1.0 / exp))
+        return takewhile(lambda p: p <= root, primes)
+
+    ret = set()
+    for m in imap(lambda i: i**4, P(4, x)):
+        for n in imap(lambda i: i**3, P(3, x - m)):
+            for p2 in P(2, x - m - n):
+                ret.add(m + n + p2**2)
+
+    ret = len(ret)
+    assert(ret == 1097343)
+    print 'problem87 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(80, 90):
