@@ -117,6 +117,29 @@ def problem83():
     assert(ret == 425185)
     print 'problem83 = %d' % ret
 
+# Counting rectangles
+def problem85():
+    '''
+    # of rectangles in m x n grid:
+    sum((m - i + 1) * (n - j + 1) for j in xrange(1, n+1) for i in xrange(1, m+1))
+    = (m(m + 1) / 2) * (n(n + 1) / 2)
+    '''
+    x = 2 * 10**6
+    z = sys.maxint
+    ret = 1
+    for n in xrange(1, 2001):
+        for m in xrange(1, 2001):
+            i = (m * (m + 1) / 2) * (n * (n + 1) / 2)
+            d = abs(x - i)
+            if d < z:
+                z = d
+                ret = m * n
+            if i >= x:
+                break
+
+    assert(ret == 2772)
+    print 'problem85 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(80, 90):
         fname = 'problem%d' % i
