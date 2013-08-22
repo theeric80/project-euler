@@ -159,6 +159,42 @@ def problem87():
     assert(ret == 1097343)
     print 'problem87 = %d' % ret
 
+# Product-sum numbers
+def problem88():
+    k = 12000
+    k2 = k * 2
+    def P(d):
+        # S = (a1, a2, ... ad)
+        # 2 <= a1 <= a2 <= ... <= ad <= x
+        x = int(k2 / (2**(d-1)))
+        q = [([i], i) for i in xrange(x, 1, -1)]
+        while len(q) > 0:
+            S, n = q.pop()
+            a = S[-1]
+            z = len(S)
+            if z < d and n * a <= k2:
+                q += [(S + [i], n * i) for i in xrange(x, a-1, -1) if n * i <= k2]
+            elif z == d:
+                yield n, S
+
+    # k <= N <= 2k
+    x = dropwhile(lambda x: 2**x <= k2, count(2)).next() - 1
+    ret = dict((i, sys.maxint) for i in xrange(2, k+1))
+
+    # n: product-sum number
+    # S: set of natural numbers. the product of S = n
+    # d: size of set S. d = k - (# of 1 in S)
+    for d in xrange(2, x+1):
+        for n, S in P(d):
+            s = sum(S)
+            k = d + (n - s)
+            if k in ret and n < ret[k]:
+                ret[k] = n
+
+    ret = sum(set(ret[k] for k in ret))
+    assert(ret == 7587457)
+    print 'problem88 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(80, 90):
         fname = 'problem%d' % i
