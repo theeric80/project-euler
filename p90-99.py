@@ -25,14 +25,19 @@ def problem92():
     x = 10 * 10**6
     D = dict((str(i), i*i) for i in xrange(0, 10))
     C = dict([(1, 1), (89, 89)])
+    ret = 0
+    # maxn: maximum number by adding the square of the digits in a 7-digits number
+    maxn = 9 * 9 * len(str(x - 1))
     for i in xrange(2, x):
         n = i
         while n not in C:
             n = sum(D[c] for c in str(n))
-        C[i] = C[n]
+        if i <= maxn:
+            C[i] = C[n]
+        if C[n] == 89:
+            ret += 1
         #print '%2d: %d' % (i, C[i])
 
-    ret = sum(1 for i in C if C[i] == 89)
     assert(ret == 8581146)
     print 'problem92 = %d' % ret
 
