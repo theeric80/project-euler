@@ -20,6 +20,22 @@ def problem90():
     assert(ret == 1217)
     print 'problem90 = %d' % ret
 
+# Square digit chains
+def problem92():
+    x = 10 * 10**6
+    D = dict((str(i), i*i) for i in xrange(0, 10))
+    C = dict([(1, 1), (89, 89)])
+    for i in xrange(2, x):
+        n = i
+        while n not in C:
+            n = sum(D[c] for c in str(n))
+        C[i] = C[n]
+        #print '%2d: %d' % (i, C[i])
+
+    ret = sum(1 for i in C if C[i] == 89)
+    assert(ret == 8581146)
+    print 'problem92 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(90, 100):
         fname = 'problem%d' % i
