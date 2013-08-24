@@ -41,6 +41,14 @@ def problem92():
     assert(ret == 8581146)
     print 'problem92 = %d' % ret
 
+# Large non-Mersenne prime
+def problem97():
+    n = 28433 * 2**7830457 + 1
+    ret = int(str(n)[-10:])
+
+    assert(ret == 8739992577)
+    print 'problem97 = %d' % ret
+
 if __name__ == '__main__':
     for i in xrange(90, 100):
         fname = 'problem%d' % i
