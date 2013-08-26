@@ -44,7 +44,9 @@ def problem92():
 # Large non-Mersenne prime
 def problem97():
     n = 28433 * 2**7830457 + 1
-    ret = int(str(n)[-10:])
+    ret = n % 10**10
+    # Slow operation because of str with big number n
+    #ret = int(str(n)[-10:])
 
     assert(ret == 8739992577)
     print 'problem97 = %d' % ret
