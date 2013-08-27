@@ -1,7 +1,7 @@
 import math
 from os.path import join, split
 from itertools import product, combinations
-from emath import profile
+from emath import profile, prime_sieve, prime_factor_p
 
 # Cube digit pairs
 def problem90():
@@ -42,6 +42,39 @@ def problem92():
 
     assert(ret == 8581146)
     print 'problem92 = %d' % ret
+
+# Amicable chains
+def problem95():
+    x = 10**6
+
+    # Divisor function
+    # http://en.wikipedia.org/wiki/Divisor_function
+    S = {1:1}
+    P = prime_sieve(int(x**0.5))
+    def d(p, a):
+        return sum(p**i for i in xrange(a+1))
+
+    def sigma(n):
+        if n not in S:
+            factors = prime_factor_p(n, P)
+            S[n] = reduce(lambda a, b: a * b, (d(p, factors[p]) for p in factors)) - n
+        return S[n]
+
+    ret = []
+    for i in xrange(2, x):
+        q = []
+        n = i
+        while n not in q and n < 1000000:
+            q.append(n)
+            n = sigma(n)
+        if i == n:
+            q.append(n)
+            ret.append(q)
+
+    ret = min(max(ret, key=len))
+
+    assert(ret == 14316)
+    print 'problem95 = %d' % ret
 
 # Large non-Mersenne prime
 def problem97():
