@@ -49,6 +49,7 @@ def problem95():
 
     # Divisor function
     # http://en.wikipedia.org/wiki/Divisor_function
+    '''
     S = {1:1}
     P = prime_sieve(int(x**0.5))
     def d(p, a):
@@ -58,6 +59,16 @@ def problem95():
         if n not in S:
             factors = prime_factor_p(n, P)
             S[n] = reduce(lambda a, b: a * b, (d(p, factors[p]) for p in factors)) - n
+        return S[n]
+    '''
+
+    # Prime Sieve-liked method
+    S = [0] * x
+    for i in xrange(1, x):
+        for n in xrange(2*i, x, i):
+            S[n] += i
+
+    def sigma(n):
         return S[n]
 
     ret = []
