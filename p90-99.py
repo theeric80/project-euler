@@ -1,3 +1,5 @@
+import math
+from os.path import join, split
 from itertools import product, combinations
 from emath import profile
 
@@ -50,6 +52,24 @@ def problem97():
 
     assert(ret == 8739992577)
     print 'problem97 = %d' % ret
+
+# Largest exponential
+def problem99():
+    fname = join(split(__file__)[0], 'data', 'p99_base_exp.txt')
+    with open(fname) as f:
+        x = [map(int, x.split(',')) for x in f.readlines()]
+
+    # http://en.wikipedia.org/wiki/Exponentiation
+    # http://en.wikipedia.org/wiki/Logarithm
+    # log(x**p, b) = p * log(x, b)
+    def _log(u):
+        i, (base, exp) = u
+        return exp * math.log10(base)
+
+    ret = max(enumerate(x, 1), key=_log)[0]
+
+    assert(ret == 709)
+    print 'problem99 = %d' % ret
 
 if __name__ == '__main__':
     for i in xrange(90, 100):
